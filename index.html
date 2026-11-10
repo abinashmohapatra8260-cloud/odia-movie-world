@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="or">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Odia Movie World</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0b12;color:white;font-family:Arial,sans-serif}
+header{background:#151522;padding:22px 5%;border-bottom:1px solid #333}
+.logo{font-size:25px;font-weight:bold;color:#ffb52e}
+nav{margin-top:18px;display:flex;gap:22px;flex-wrap:wrap}
+nav a{color:white;text-decoration:none}
+.hero{text-align:center;padding:55px 15px;background:linear-gradient(120deg,#25133c,#111827)}
+.hero h1{font-size:34px;margin:0 0 12px}
+.hero p{color:#ccc}
+.search{width:min(90%,500px);padding:14px;border-radius:25px;border:1px solid #555;background:#20202c;color:white;font-size:16px}
+.section{padding:28px 5%}
+.section h2{color:#ffb52e}
+.movies{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:20px}
+.card{background:#191925;border-radius:12px;overflow:hidden;border:1px solid #30303d}
+.poster{height:205px;display:flex;align-items:center;justify-content:center;text-align:center;padding:15px;background:linear-gradient(145deg,#57234f,#172b4d);font-size:23px;font-weight:bold}
+.card h3{padding:0 12px;font-size:16px}
+.card p{padding:0 12px;color:#aaa;font-size:13px}
+.btn{display:block;margin:12px;padding:11px;text-align:center;background:#ed9c22;color:#17120b;border-radius:7px;text-decoration:none;font-weight:bold;border:0;cursor:pointer}
+.btn:hover{background:#ffc45b}
+footer{text-align:center;padding:25px;background:#151522;color:#aaa;margin-top:35px}
+.empty{color:#aaa;text-align:center;grid-column:1/-1}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🎬 ODIA MOVIE WORLD</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#movies">Odia Movies</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>Welcome to Odia Movie World</h1>
+  <p>ଓଡ଼ିଆ ସିନେମା ଜଗତକୁ ସ୍ୱାଗତ</p>
+  <input class="search" id="search"
+    type="search" placeholder="🔍 Search Odia Movies..."
+    oninput="searchMovies()">
+</section>
+
+<section class="section" id="movies">
+  <h2>🍿 Latest Odia Movies</h2>
+  <div class="movies" id="movieList"></div>
+</section>
+
+<section class="section" id="about">
+  <h2>About Us</h2>
+  <p>Welcome to Odia Movie World. ଏଠାରେ ଓଡ଼ିଆ ଚଳଚ୍ଚିତ୍ର ବିଷୟରେ ସୂଚନା ପାଇପାରିବେ।</p>
+</section>
+
+<section class="section" id="contact">
+  <h2>Contact Us</h2>
+  <p>For enquiries: your-email@example.com</p>
+</section>
+
+<footer>
+  © 2026 Odia Movie World | All Rights Reserved
+</footer>
+
+<script>
+const movies = [
+  {
+    title:"Odia Movie Demo 1",
+    year:"2026",
+    category:"Drama",
+    poster:"🎬",
+    download:""
+  },
+  {
+    title:"Odia Movie Demo 2",
+    year:"2026",
+    category:"Romance",
+    poster:"❤️",
+    download:""
+  },
+  {
+    title:"Odia Movie Demo 3",
+    year:"2025",
+    category:"Action",
+    poster:"🎥",
+    download:""
+  },
+  {
+    title:"Odia Movie Demo 4",
+    year:"2025",
+    category:"Comedy",
+    poster:"🍿",
+    download:""
+  }
+];
+
+function displayMovies(items){
+  const list=document.getElementById("movieList");
+  list.innerHTML="";
+
+  if(items.length===0){
+    list.innerHTML='<p class="empty">No movies found!</p>';
+    return;
+  }
+
+  items.forEach(movie=>{
+    const card=document.createElement("div");
+    card.className="card";
+
+    const poster=document.createElement("div");
+    poster.className="poster";
+    poster.textContent=movie.poster;
+
+    const title=document.createElement("h3");
+    title.textContent=movie.title;
+
+    const info=document.createElement("p");
+    info.textContent=movie.year+" | "+movie.category;
+
+    const link=document.createElement("a");
+    link.className="btn";
+    link.textContent="⬇ Download";
+    link.href=movie.download || "#";
+    
+    if(movie.download){
+      link.target="_blank";
+      link.rel="noopener";
+    }else{
+      link.onclick=(e)=>{
+        e.preventDefault();
+        alert("Download link is not available yet.");
+      };
+    }
+
+    card.append(poster,title,info,link);
+    list.appendChild(card);
+  });
+}
+
+function searchMovies(){
+  const value=document.getElementById("search").value.toLowerCase();
+  const filtered=movies.filter(movie=>
+    movie.title.toLowerCase().includes(value) ||
+    movie.category.toLowerCase().includes(value) ||
+    movie.year.includes(value)
+  );
+  displayMovies(filtered);
+}
+
+displayMovies(movies);
+</script>
+</body>
+</html>
